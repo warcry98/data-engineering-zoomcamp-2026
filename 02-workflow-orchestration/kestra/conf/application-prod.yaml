@@ -1,0 +1,35 @@
+datasources:
+  postgres:
+    url: jdbc:postgresql://kestra_postgres:5432/kestra
+    driver-class-name: org.postgresql.Driver
+    username: kestra
+    password: k3str4
+kestra:
+  # server:
+  #   basic-auth:
+  #     username: "admin@kestra.io" # must be a valid email address
+  #     password: kestra
+  #     # Do not authenticate these URLs (some Micronaut defaults are open by default for security reasons)
+  #     open-urls:
+  #       - "/api/v1/main/executions/webhook/"
+  repository:
+    type: postgres
+    postgres:
+      datasource: postgres
+    # local:
+    #   base-path: "./flows"
+  
+  queue:
+    type: postgres
+    postgres:
+      datasource: postgres
+      
+  storage:
+    type: local
+    local:
+      base-path: "/app/storage"
+
+  tasks:
+    tmp-dir:
+      path: "/tmp/kestra-wd/tmp"
+  url: "http://localhost:8080/"

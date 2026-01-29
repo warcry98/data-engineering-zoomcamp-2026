@@ -1,0 +1,48 @@
+volumes:
+  ny_taxi_postgres_data:
+    driver: local
+  kestra_postgres_data:
+    driver: local
+
+services:
+  pgdatabase:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: ny_taxi
+    ports:
+      - "5433:5432"
+    volumes:
+      - ny_taxi_postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+
+  kestra_postgres:
+    image: postgres:18
+    volumes:
+      - kestra_postgres_data:/var/lib/postgresql
+    environment:
+      POSTGRES_DB: kestra
+      POSTGRES_USER: kestra
+      POSTGRES_PASSWORD: k3str4
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+  
+  kestra:
+    build: .
+    image: kestra-java-binary:1.2.2
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./flows:/app/flows
+      - ./storage:/app/storage
+      - /var/run/docker.sock:/var/run/docker.sock
