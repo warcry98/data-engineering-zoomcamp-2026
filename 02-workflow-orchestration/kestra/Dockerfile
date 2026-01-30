@@ -35,5 +35,5 @@ COPY plugins plugins
 COPY conf/application-prod.yaml conf/application.yaml
 
 # --- run kestra ---
-ENTRYPOINT ["java", "-jar", "/app/kestra-1.2.2"]
+ENTRYPOINT ["java", "-jar", "/app/kestra.jar"]
 CMD ["server", "standalone", "--config", "/app/conf/application.yaml", "-f", "/app/flows", "--plugins", "/app/plugins"]
