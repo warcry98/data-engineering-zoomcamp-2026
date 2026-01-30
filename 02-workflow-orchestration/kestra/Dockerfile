@@ -26,7 +26,7 @@ WORKDIR /app
 
 # --- copy kestra binary ---
 COPY kestra.jar .
-RUN chmod +x kestra-1.2.2
+RUN chmod +x kestra.jar
 
 # --- copy plugins ---
 COPY plugins plugins
