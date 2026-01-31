@@ -92,6 +92,8 @@ resource "aws_instance" "this" {
     #!/bin/bash
     set -euxo pipefail
 
+    exec > /var/log/user-data.log 2>&1
+
     # -----------------
     # Base system
     # -----------------
@@ -139,7 +141,7 @@ resource "aws_instance" "this" {
     apt install -y amazon-cloudwatch-agent
 
     cat > /opt/aws/amazon-cloudwatch-agent/bin/config.json <<'CWEOF'
-    ${file("${path.module}/cloudwatch-agent.json")}
+    ${templatefile("${path.module}/cloudwatch-agent.json", {})}
     CWEOF
 
     /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
@@ -149,21 +151,19 @@ resource "aws_instance" "this" {
     -s
 
     # -----------------
-    # Kestra (run as ubuntu)
+    # Kestra (root → docker works)
     # -----------------
-    sudo -u ubuntu bash <<'UBUNTU_EOF'
-    set -eux
-
     cd /home/ubuntu
 
+    if [ ! -d data-engineering-zoomcamp-2026 ]; then
     git clone https://github.com/warcry98/data-engineering-zoomcamp-2026.git
+    fi
 
     cd data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra
 
     docker compose pull
     docker compose build
     docker compose up -d
-    UBUNTU_EOF
     EOF
 
   tags = {
