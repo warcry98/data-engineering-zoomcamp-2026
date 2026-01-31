@@ -3,7 +3,7 @@ volumes:
     driver: local
   kestra_postgres_data:
     driver: local
-  pgadmin_data:
+  vol-pgadmin_data:
     driver: local
 
 services:
