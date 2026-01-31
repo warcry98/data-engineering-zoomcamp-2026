@@ -50,15 +50,8 @@ resource "aws_security_group" "this" {
   }
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = var.allowed_app_cidr
-  }
-
-  ingress {
-    from_port   = 5433
-    to_port     = 5433
+    from_port   = 8085
+    to_port     = 8085
     protocol    = "tcp"
     cidr_blocks = var.allowed_app_cidr
   }
@@ -148,6 +141,12 @@ resource "aws_instance" "this" {
       -m ec2 \
       -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json \
       -s
+
+    cd ~
+    git clone https://github.com/warcry98/data-engineering-zoomcamp-2026.git
+    cd ~/data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra
+    docker compose build
+    docker compose up -d
   EOF
 
   tags = {
