@@ -101,7 +101,7 @@ resource "aws_instance" "this" {
     # -----------------
     # UFW
     # -----------------
-    apt install -y ufw openjdk-21-jre
+    apt install -y ufw openjdk-21-jre git-lfs
     ufw allow 22
     ufw allow 8080
     ufw allow 8085
