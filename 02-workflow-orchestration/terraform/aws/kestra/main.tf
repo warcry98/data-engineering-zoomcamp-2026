@@ -90,64 +90,81 @@ resource "aws_instance" "this" {
 
   user_data = <<-EOF
     #!/bin/bash
-    set -eux
+    set -euxo pipefail
 
+    # -----------------
+    # Base system
+    # -----------------
     apt update -y
     apt upgrade -y
 
     # -----------------
     # UFW
     # -----------------
-    apt install -y ufw
+    apt install -y ufw openjdk-21-jre
     ufw allow 22
+    ufw allow 8080
+    ufw allow 8085
     ufw allow 5432
     ufw allow 5433
-    ufw allow 8080
     ufw --force enable
 
     # -----------------
     # Docker
     # -----------------
-    apt install -y ca-certificates curl gnupg
+    apt install -y ca-certificates curl gnupg git
+
     install -m 0755 -d /etc/apt/keyrings
 
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-      | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
     chmod a+r /etc/apt/keyrings/docker.gpg
 
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-      https://download.docker.com/linux/ubuntu noble stable" \
-      > /etc/apt/sources.list.d/docker.list
+    https://download.docker.com/linux/ubuntu noble stable" \
+    > /etc/apt/sources.list.d/docker.list
 
     apt update -y
     apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-    usermod -aG docker ubuntu
     systemctl enable docker
     systemctl start docker
+
+    usermod -aG docker ubuntu
 
     # -----------------
     # CloudWatch Agent
     # -----------------
     apt install -y amazon-cloudwatch-agent
 
-    cat <<'CWEOF' > /opt/aws/amazon-cloudwatch-agent/bin/config.json
+    cat > /opt/aws/amazon-cloudwatch-agent/bin/config.json <<'CWEOF'
     ${file("${path.module}/cloudwatch-agent.json")}
     CWEOF
 
     /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
-      -a fetch-config \
-      -m ec2 \
-      -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json \
-      -s
+    -a fetch-config \
+    -m ec2 \
+    -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json \
+    -s
 
-    cd ~
+    # -----------------
+    # Kestra (run as ubuntu)
+    # -----------------
+    sudo -u ubuntu bash <<'UBUNTU_EOF'
+    set -eux
+
+    cd /home/ubuntu
+
     git clone https://github.com/warcry98/data-engineering-zoomcamp-2026.git
-    cd ~/data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra
+
+    cd data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra
+
+    docker compose pull
     docker compose build
     docker compose up -d
-  EOF
+    UBUNTU_EOF
+    EOF
 
   tags = {
     Name = var.instance_name
