@@ -5,7 +5,6 @@
       - curl
       - gnupg
     state: present
-    update_cache: true
 
 - name: Create keyrings directory
   file:
