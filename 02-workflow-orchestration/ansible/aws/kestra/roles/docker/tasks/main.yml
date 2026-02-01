@@ -30,7 +30,7 @@
     content: |
       Types: deb
       URIs: https://download.docker.com/linux/ubuntu
-      Suites: {{ ubuntu_codename.stdout }}
+      Suites: {{ ubuntu_codename }}
       Components: stable
       Signed-By: /etc/apt/keyrings/docker.asc
 
