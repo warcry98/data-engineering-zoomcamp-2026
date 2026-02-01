@@ -20,7 +20,7 @@
     mode: '0644'
 
 - name: Read Ubuntu codename
-  command: . /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}"
+  command: lsb_release --codename --short && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}"
   register: ubuntu_codename
   changed_when: false
 
