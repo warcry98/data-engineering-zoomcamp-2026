@@ -1,0 +1,25 @@
+- name: Install CloudWatch Agent
+  apt:
+    name: amazon-cloudwatch-agent
+    state: present
+    update_cache: true
+
+- name: Create CloudWatch config directory
+  file:
+    path: /opt/aws/amazon-cloudwatch-agent/bin
+    state: directory
+    mode: '0755'
+
+- name: Deploy CloudWatch config
+  template:
+    src: cloudwatch-agent.json.j2
+    dest: /opt/aws/amazon-cloudwatch-agent/bin/config.json
+    mode: '0644'
+
+- name: Start CloudWatch Agent
+  command: >
+    /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl
+    -a fetch-config
+    -m ec2
+    -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
+    -s
