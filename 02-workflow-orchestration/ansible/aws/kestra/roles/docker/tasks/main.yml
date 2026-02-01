@@ -20,9 +20,8 @@
     mode: '0644'
 
 - name: Read Ubuntu codename
-  command: cat /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}"
-  register: ubuntu_codename
-  changed_when: false
+  set_fact:
+    ubuntu_codename: "{{ ansible_distribution_release }}"
 
 - name: Add Docker apt source (sources.list.d)
   copy:
