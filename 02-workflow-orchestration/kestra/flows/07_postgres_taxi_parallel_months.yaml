@@ -1,4 +1,4 @@
-id: 06_postgres_taxi_parallel_months
+id: 07_postgres_taxi_parallel_months
 namespace: zoomcamp
 description: |
   Load NYC Taxi data per month concurrently.
