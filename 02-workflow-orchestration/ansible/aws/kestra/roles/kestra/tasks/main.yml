@@ -5,12 +5,7 @@
     version: main
     force: no
   become: false
-
-- name: Pull Kestra images
-  command: docker compose pull
-  args:
-    chdir: /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra
-
+  
 - name: Build Kestra
   command: docker compose build
   args:
