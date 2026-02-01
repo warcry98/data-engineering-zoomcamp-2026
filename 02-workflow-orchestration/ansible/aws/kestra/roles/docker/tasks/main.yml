@@ -16,7 +16,7 @@
 - name: Add Docker GPG key
   get_url:
     url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /etc/apt/keyrings/docker.gpg
+    dest: /etc/apt/keyrings/docker.asc
     mode: '0644'
 
 - name: Read Ubuntu codename
