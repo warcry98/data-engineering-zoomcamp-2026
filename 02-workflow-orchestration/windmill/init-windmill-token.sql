@@ -1,3 +1,69 @@
+-- FUNCTION: public.notify_workspace_premium_change()
+
+-- DROP FUNCTION IF EXISTS public.notify_workspace_premium_change();
+
+CREATE OR REPLACE FUNCTION public.notify_workspace_premium_change()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+    PERFORM pg_notify('notify_workspace_premium_change', NEW.id);
+    RETURN NEW;
+END;
+$BODY$;
+
+ALTER FUNCTION public.notify_workspace_premium_change()
+    OWNER TO root;
+
+-- FUNCTION: public.notify_token_invalidation()
+
+-- DROP FUNCTION IF EXISTS public.notify_token_invalidation();
+
+CREATE OR REPLACE FUNCTION public.notify_token_invalidation()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+    -- Only notify for session token deletions when the invalidation settings are enabled
+    IF OLD.label = 'session' AND OLD.email IS NOT NULL THEN
+        PERFORM pg_notify('notify_token_invalidation', OLD.token);
+    END IF;
+    RETURN OLD;
+END;
+$BODY$;
+
+ALTER FUNCTION public.notify_token_invalidation()
+    OWNER TO root;
+
+-- Role: windmill_admin
+-- DROP ROLE IF EXISTS windmill_admin;
+
+CREATE ROLE windmill_admin WITH
+  NOLOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION
+  BYPASSRLS;
+
+GRANT windmill_user TO windmill_admin;
+
+-- Role: windmill_user
+-- DROP ROLE IF EXISTS windmill_user;
+
+CREATE ROLE windmill_user WITH
+  NOLOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION
+  NOBYPASSRLS;
 -- Table: public.workspace
 
 -- DROP TABLE IF EXISTS public.workspace;
@@ -25,9 +91,9 @@ ALTER TABLE IF EXISTS public.workspace
 
 GRANT ALL ON TABLE public.workspace TO root;
 
--- GRANT ALL ON TABLE public.workspace TO windmill_admin;
+GRANT ALL ON TABLE public.workspace TO windmill_admin;
 
--- GRANT ALL ON TABLE public.workspace TO windmill_user;
+GRANT ALL ON TABLE public.workspace TO windmill_user;
 -- Index: workspace_parent_idx
 
 -- DROP INDEX IF EXISTS public.workspace_parent_idx;
@@ -80,9 +146,9 @@ ALTER TABLE IF EXISTS public.token
 
 GRANT ALL ON TABLE public.token TO root;
 
--- GRANT ALL ON TABLE public.token TO windmill_admin;
+GRANT ALL ON TABLE public.token TO windmill_admin;
 
--- GRANT ALL ON TABLE public.token TO windmill_user;
+GRANT ALL ON TABLE public.token TO windmill_user;
 -- Index: index_token_exp
 
 -- DROP INDEX IF EXISTS public.index_token_exp;

@@ -28,8 +28,6 @@ sudo -u ubuntu ansible-playbook \
 
 # Firewall LAST
 ufw allow 22
-ufw allow 8080
+ufw allow 8000
 ufw allow 8085
-ufw allow 5432
-ufw allow 5433
 ufw --force enable
