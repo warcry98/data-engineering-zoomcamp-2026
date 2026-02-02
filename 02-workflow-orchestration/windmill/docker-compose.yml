@@ -12,6 +12,17 @@ services:
       interval: 30s
       timeout: 10s
       retries: 10
+  
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "pgadmin@pgadmin.com"
+      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+    ports:
+      - "8085:80"
+    volumes:
+      - vol-pgadmin_data:/var/lib/pgadmin
 
   windmill:
     build: .
@@ -34,4 +45,6 @@ volumes:
   db_data:
     driver: local
   windmill_data:
+    driver: local
+  vol-pgadmin_data:
     driver: local

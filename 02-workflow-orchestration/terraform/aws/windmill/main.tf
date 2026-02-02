@@ -57,8 +57,8 @@ resource "aws_security_group" "this" {
   }
 
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = 8000
+    to_port     = 8000
     protocol    = "tcp"
     cidr_blocks = var.allowed_app_cidr
   }
