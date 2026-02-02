@@ -18,8 +18,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup update
 
 # ✅ uv — REQUIRED by Windmill
-RUN curl -L https://github.com/astral-sh/uv/releases/latest/download/uv-x86_64-unknown-linux-gnu.tar.gz \
-    | tar -xz -C /usr/local/bin --strip-components=1 uv
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Sanity check (fail build if missing)
 RUN uv --version
