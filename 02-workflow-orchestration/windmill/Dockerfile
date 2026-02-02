@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \ 
     golang-go \ 
     build-essential \ 
+    unzip \
     curl \ 
     libssl3 \
     python3 \ 
@@ -28,7 +29,7 @@ ENV PATH="/root/.local/bin/:$PATH"
 # Sanity check (fail build if missing)
 RUN uv --version
 
-RUN curl -fsSL https://bun.sh/install | bash
+RUN curl -fsSL https://bun.com/install | bash
 
 RUN bun --version
 
