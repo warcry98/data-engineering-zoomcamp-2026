@@ -41,8 +41,8 @@ RUN npm install -g windmill-cli
 COPY windmill-amd64 /app/windmill
 RUN chmod +x /app/windmill
 
-COPY scripts ./scripts
-COPY flows ./flows
+# COPY scripts ./scripts
+# COPY flows ./flows
 # COPY wmill.yaml ./wmill.yaml
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

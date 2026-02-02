@@ -25,12 +25,12 @@ wmill workspace switch zoomcamp \
   --base-url "$WMILL_HOST" \
   --token "$WMILL_TOKEN"
 
-echo "Syncing scripts & flows..."
-wmill sync push \
-  --base-url "$WMILL_HOST" \
-  --token "$WMILL_TOKEN" \
-  --workspace zoomcamp \
-  --yes
+# echo "Syncing scripts & flows..."
+# wmill sync push \
+#   --base-url "$WMILL_HOST" \
+#   --token "$WMILL_TOKEN" \
+#   --workspace zoomcamp \
+#   --yes
 
 echo "Bootstrap complete"
 
