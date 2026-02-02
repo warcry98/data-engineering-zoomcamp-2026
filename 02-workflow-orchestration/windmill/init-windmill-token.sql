@@ -1,3 +1,29 @@
+-- Role: windmill_user
+-- DROP ROLE IF EXISTS windmill_user;
+
+CREATE ROLE windmill_user WITH
+  NOLOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION
+  NOBYPASSRLS;
+  
+-- Role: windmill_admin
+-- DROP ROLE IF EXISTS windmill_admin;
+
+CREATE ROLE windmill_admin WITH
+  NOLOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION
+  BYPASSRLS;
+
+GRANT windmill_user TO windmill_admin;
+
 -- FUNCTION: public.notify_workspace_premium_change()
 
 -- DROP FUNCTION IF EXISTS public.notify_workspace_premium_change();
@@ -39,31 +65,6 @@ $BODY$;
 ALTER FUNCTION public.notify_token_invalidation()
     OWNER TO root;
 
--- Role: windmill_admin
--- DROP ROLE IF EXISTS windmill_admin;
-
-CREATE ROLE windmill_admin WITH
-  NOLOGIN
-  NOSUPERUSER
-  INHERIT
-  NOCREATEDB
-  NOCREATEROLE
-  NOREPLICATION
-  BYPASSRLS;
-
-GRANT windmill_user TO windmill_admin;
-
--- Role: windmill_user
--- DROP ROLE IF EXISTS windmill_user;
-
-CREATE ROLE windmill_user WITH
-  NOLOGIN
-  NOSUPERUSER
-  INHERIT
-  NOCREATEDB
-  NOCREATEROLE
-  NOREPLICATION
-  NOBYPASSRLS;
 -- Table: public.workspace
 
 -- DROP TABLE IF EXISTS public.workspace;
