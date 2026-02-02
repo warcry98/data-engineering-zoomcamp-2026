@@ -6,12 +6,12 @@
     force: no
   become: false
   
-- name: Build Kestra
+- name: Build Windmill
   command: docker compose build
   args:
-    chdir: /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra
+    chdir: /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/windmill
 
-- name: Start Kestra
+- name: Start Windmill
   command: docker compose up -d
   args:
-    chdir: /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra
+    chdir: /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/windmill
