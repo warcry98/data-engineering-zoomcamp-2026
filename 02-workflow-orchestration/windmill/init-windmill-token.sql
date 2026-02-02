@@ -9,7 +9,7 @@ CREATE ROLE windmill_user WITH
   NOCREATEROLE
   NOREPLICATION
   NOBYPASSRLS;
-  
+
 -- Role: windmill_admin
 -- DROP ROLE IF EXISTS windmill_admin;
 
@@ -179,6 +179,6 @@ INSERT INTO public.token (
 VALUES (
   'docker-bootstrap',
   'docker-bootstrap',
-  admin@windmill.dev,
+  'admin@windmill.dev',
   true
 );
