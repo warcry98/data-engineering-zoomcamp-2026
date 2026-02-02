@@ -25,9 +25,9 @@ ALTER TABLE IF EXISTS public.workspace
 
 GRANT ALL ON TABLE public.workspace TO root;
 
-GRANT ALL ON TABLE public.workspace TO windmill_admin;
+-- GRANT ALL ON TABLE public.workspace TO windmill_admin;
 
-GRANT ALL ON TABLE public.workspace TO windmill_user;
+-- GRANT ALL ON TABLE public.workspace TO windmill_user;
 -- Index: workspace_parent_idx
 
 -- DROP INDEX IF EXISTS public.workspace_parent_idx;
@@ -48,7 +48,7 @@ CREATE OR REPLACE TRIGGER workspace_premium_change_trigger
     ON public.workspace
     FOR EACH ROW
     EXECUTE FUNCTION public.notify_workspace_premium_change();
-    
+
 -- Table: public.token
 
 -- DROP TABLE IF EXISTS public.token;
@@ -80,9 +80,9 @@ ALTER TABLE IF EXISTS public.token
 
 GRANT ALL ON TABLE public.token TO root;
 
-GRANT ALL ON TABLE public.token TO windmill_admin;
+-- GRANT ALL ON TABLE public.token TO windmill_admin;
 
-GRANT ALL ON TABLE public.token TO windmill_user;
+-- GRANT ALL ON TABLE public.token TO windmill_user;
 -- Index: index_token_exp
 
 -- DROP INDEX IF EXISTS public.index_token_exp;
