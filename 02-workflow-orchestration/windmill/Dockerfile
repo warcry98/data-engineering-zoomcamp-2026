@@ -30,7 +30,7 @@ ENV PATH="/root/.local/bin/:$PATH"
 RUN uv --version
 
 RUN curl -fsSL https://bun.com/install | bash
-
+ENV PATH="/root/.bun/bin:$PATH"
 RUN bun --version
 
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
