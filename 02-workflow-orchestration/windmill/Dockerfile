@@ -32,10 +32,22 @@ RUN curl -fsSL https://bun.com/install | bash
 
 RUN bun --version
 
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+RUN apt-get install -y nodejs
+RUN node -v
+
+RUN npm install -g windmill-cli
+
 COPY windmill-amd64 /app/windmill
 RUN chmod +x /app/windmill
+
+COPY scripts ./scripts
+COPY flows ./flows
+# COPY wmill.yaml ./wmill.yaml
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 8000
 VOLUME ["/data"]
 
-ENTRYPOINT ["/app/windmill"]
+ENTRYPOINT ["/entrypoint.sh"]
