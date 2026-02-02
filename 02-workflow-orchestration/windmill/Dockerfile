@@ -3,10 +3,12 @@ FROM ubuntu:24.04
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    ca-certificates golang-go build-essential curl \
+    ca-certificates golang-go build-essential curl libssl3 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN source "$HOME/.cargo/env"
 RUN rustup update
