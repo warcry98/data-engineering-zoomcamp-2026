@@ -1,0 +1,17 @@
+- name: Clone Zoomcamp repo
+  git:
+    repo: https://github.com/warcry98/data-engineering-zoomcamp-2026.git
+    dest: /home/ubuntu/data-engineering-zoomcamp-2026
+    version: main
+    force: no
+  become: false
+  
+- name: Build Kestra
+  command: docker compose build
+  args:
+    chdir: /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra
+
+- name: Start Kestra
+  command: docker compose up -d
+  args:
+    chdir: /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/kestra

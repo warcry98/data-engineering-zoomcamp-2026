@@ -88,6 +88,8 @@ resource "aws_instance" "this" {
     volume_type = "gp3"
   }
 
+  user_data = file("${path.module}/bootstrap.sh")
+
   tags = {
     Name = var.instance_name
   }

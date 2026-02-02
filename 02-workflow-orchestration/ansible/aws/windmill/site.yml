@@ -1,0 +1,9 @@
+- name: Configure EC2
+  hosts: localhost
+  connection: local
+  become: true
+
+  roles:
+    - docker
+    - cloudwatch
+    # - kestra
