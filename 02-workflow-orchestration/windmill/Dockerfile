@@ -28,6 +28,10 @@ ENV PATH="/root/.local/bin/:$PATH"
 # Sanity check (fail build if missing)
 RUN uv --version
 
+RUN curl -fsSL https://bun.com/install | bash
+
+RUN bun --version
+
 COPY windmill-amd64 /app/windmill
 RUN chmod +x /app/windmill
 
