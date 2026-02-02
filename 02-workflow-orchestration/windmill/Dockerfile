@@ -28,7 +28,7 @@ ENV PATH="/root/.local/bin/:$PATH"
 # Sanity check (fail build if missing)
 RUN uv --version
 
-RUN curl -fsSL https://bun.com/install | bash
+RUN curl -fsSL https://bun.sh/install | bash
 
 RUN bun --version
 
