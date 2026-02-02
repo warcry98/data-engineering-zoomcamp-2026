@@ -1,3 +1,54 @@
+-- Table: public.workspace
+
+-- DROP TABLE IF EXISTS public.workspace;
+
+CREATE TABLE IF NOT EXISTS public.workspace
+(
+    id character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    owner character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    deleted boolean NOT NULL DEFAULT false,
+    premium boolean NOT NULL DEFAULT false,
+    parent_workspace_id character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT workspace_pkey PRIMARY KEY (id),
+    CONSTRAINT workspace_parent_workspace_id_fkey FOREIGN KEY (parent_workspace_id)
+        REFERENCES public.workspace (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE SET NULL,
+    CONSTRAINT proper_id CHECK (id::text ~ '^\w+(-\w+)*$'::text)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.workspace
+    OWNER to root;
+
+GRANT ALL ON TABLE public.workspace TO root;
+
+GRANT ALL ON TABLE public.workspace TO windmill_admin;
+
+GRANT ALL ON TABLE public.workspace TO windmill_user;
+-- Index: workspace_parent_idx
+
+-- DROP INDEX IF EXISTS public.workspace_parent_idx;
+
+CREATE INDEX IF NOT EXISTS workspace_parent_idx
+    ON public.workspace USING btree
+    (parent_workspace_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default
+    WHERE parent_workspace_id IS NOT NULL;
+
+-- Trigger: workspace_premium_change_trigger
+
+-- DROP TRIGGER IF EXISTS workspace_premium_change_trigger ON public.workspace;
+
+CREATE OR REPLACE TRIGGER workspace_premium_change_trigger
+    AFTER UPDATE OF premium
+    ON public.workspace
+    FOR EACH ROW
+    EXECUTE FUNCTION public.notify_workspace_premium_change();
+    
 -- Table: public.token
 
 -- DROP TABLE IF EXISTS public.token;
