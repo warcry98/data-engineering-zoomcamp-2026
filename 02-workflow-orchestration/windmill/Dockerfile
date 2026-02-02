@@ -17,8 +17,12 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup update
 
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.cargo/bin:/root/.local/bin:${PATH}"
+# ✅ uv — REQUIRED by Windmill
+RUN curl -L https://github.com/astral-sh/uv/releases/latest/download/uv-x86_64-unknown-linux-gnu.tar.gz \
+    | tar -xz -C /usr/local/bin --strip-components=1 uv
+
+# Sanity check (fail build if missing)
+RUN uv --version
 
 COPY windmill-amd64 /app/windmill
 RUN chmod +x /app/windmill
