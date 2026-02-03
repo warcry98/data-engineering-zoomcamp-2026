@@ -16,8 +16,10 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fL "https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz" | gzip -d > cs \
-    && chmod +x cs && ./cs setup
+RUN curl -fL \
+    https://github.com/coursier/coursier/releases/download/v2.1.24/cs-x86_64-pc-linux-container.gz \
+    | gzip -d > /usr/bin/coursier \
+    && chmod +x /usr/bin/coursier
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:$PATH"
