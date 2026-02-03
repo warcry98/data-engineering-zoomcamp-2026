@@ -1,0 +1,45 @@
+summary: java-nyc_taxi-flow
+value:
+  modules:
+    - id: a
+      value:
+        type: script
+        path: u/admin/java-nyc_taxi/get_months
+        input_transforms:
+          year:
+            type: javascript
+            expr: flow_input.year
+        is_trigger: false
+  same_worker: false
+  flow_env: {}
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  properties:
+    taxi:
+      type: string
+      description: ""
+      default: yellow
+      enum:
+        - yellow
+        - green
+      nullable: false
+      disableCreate: true
+      enumLabels: {}
+    year:
+      type: string
+      description: ""
+      default: "2019"
+      enum:
+        - "2019"
+        - "2020"
+        - "2021"
+      nullable: false
+      disableCreate: true
+      enumLabels: {}
+  required:
+    - taxi
+    - year
+  type: object
+  order:
+    - taxi
+    - year
