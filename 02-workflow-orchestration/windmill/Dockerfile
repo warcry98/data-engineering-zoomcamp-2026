@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \ 
     golang-go \ 
     build-essential \ 
+    postgresql-client \
+    openjdk-21-jdk \
     unzip \
     curl \ 
     libssl3 \
