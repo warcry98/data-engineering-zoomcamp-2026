@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
+RUN curl -fL https://get.coursier.io | sh \
+    && mv cs /usr/bin/coursier
+
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:$PATH"
 RUN rustup update
