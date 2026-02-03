@@ -22,6 +22,8 @@ RUN curl -fL \
     && chmod +x coursier \
     && coursier setup -y --install-dir=/usr/local/bin
 
+RUN coursier --version
+
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:$PATH"
 RUN rustup update
