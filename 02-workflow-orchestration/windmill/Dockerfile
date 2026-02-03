@@ -20,7 +20,7 @@ RUN curl -fL \
     https://github.com/coursier/coursier/releases/download/v2.1.24/cs-x86_64-pc-linux-container.gz \
     | gzip -d > coursier \
     && chmod +x coursier \
-    && coursier setup -y --install-dir=/usr/local/bin
+    && ./coursier setup -y --install-dir=/usr/local/bin
 
 RUN coursier --version
 
