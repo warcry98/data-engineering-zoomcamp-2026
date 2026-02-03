@@ -57,6 +57,7 @@ wmill workspace switch zoomcamp \
   --token "$WMILL_TOKEN"
 
 echo "Syncing scripts & flows..."
+cd /app/zoomcamp
 wmill sync push \
   --base-url "$WMILL_HOST" \
   --token "$WMILL_TOKEN" \
