@@ -18,8 +18,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN curl -fL \
     https://github.com/coursier/coursier/releases/download/v2.1.24/cs-x86_64-pc-linux-container.gz \
-    | gzip -d > /usr/bin/coursier \
-    && chmod +x /usr/bin/coursier
+    | gzip -d > coursier \
+    && chmod +x coursier \
+    && coursier setup -y --install-dir=/usr/local/bin
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:$PATH"
