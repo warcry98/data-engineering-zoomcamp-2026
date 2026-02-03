@@ -53,8 +53,7 @@ RUN chmod +x /app/windmill
 
 ENV WMILL_UV_PATH=/usr/local/bin/uv
 
-COPY scripts /app/scripts
-COPY flows /app/flows
+COPY zoomcamp /app/zoomcamp
 # COPY wmill.yaml ./wmill.yaml
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
