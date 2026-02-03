@@ -24,9 +24,8 @@ RUN rustup update
 ADD https://astral.sh/uv/install.sh /uv-installer.sh
 
 # Run the installer then remove it
-RUN sh /uv-installer.sh && rm /uv-installer.sh
-
-ENV PATH="/root/.local/bin/:$PATH"
+RUN curl -Ls https://astral.sh/uv/install.sh | \
+    UV_INSTALL_DIR=/usr/local/bin sh
 
 # Sanity check (fail build if missing)
 RUN uv --version
@@ -43,6 +42,8 @@ RUN npm install -g windmill-cli
 
 COPY windmill-amd64 /app/windmill
 RUN chmod +x /app/windmill
+
+ENV WMILL_UV_PATH=/usr/local/bin/uv
 
 # COPY scripts ./scripts
 # COPY flows ./flows
