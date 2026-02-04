@@ -56,13 +56,20 @@ wmill workspace switch zoomcamp \
   --base-url "$WMILL_HOST" \
   --token "$WMILL_TOKEN"
 
-echo "Syncing scripts & flows..."
-cd /app/zoomcamp
-wmill sync push \
+echo "Syncing scripts..."
+cd /app/zoomcamp/scripts
+wmill script push u/admin/java-nyc_taxi/Main.java \
   --base-url "$WMILL_HOST" \
   --token "$WMILL_TOKEN" \
-  --workspace zoomcamp \
-  --yes
+  --workspace zoomcamp
+
+echo "Syncing flows..."
+cd /app/zoomcamp
+wmill flow push flows/java-nyc_taxi.flow f/admin/java-nyc_taxi \
+  --base-url "$WMILL_HOST" \
+  --token "$WMILL_TOKEN" \
+  --workspace zoomcamp
+
 
 echo "Bootstrap complete"
 

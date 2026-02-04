@@ -1,0 +1,9 @@
+summary: Empty Java script
+description: Minimal Java script that returns empty JSON
+
+language: java
+entrypoint: Main
+
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
