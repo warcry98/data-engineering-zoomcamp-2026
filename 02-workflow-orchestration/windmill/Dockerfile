@@ -43,7 +43,7 @@ ENV PATH="/root/.bun/bin:$PATH"
 RUN bun --version
 
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-RUN apt-get install -y nodejs npm
+RUN apt-get install -y nodejs
 RUN node -v && npm -v
 
 RUN npm install -g windmill-cli
