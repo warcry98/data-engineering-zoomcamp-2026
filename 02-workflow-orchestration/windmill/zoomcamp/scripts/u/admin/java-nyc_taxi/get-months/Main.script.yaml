@@ -1,9 +1,17 @@
-summary: Empty Java script
-description: Minimal Java script that returns empty JSON
+summary: Get Month
+description: This script was edited in place of flow f/admin/java-nyc_taxi  by admin.
 
 language: java
 entrypoint: Main
 
 schema:
   $schema: https://json-schema.org/draft/2020-12/schema
+  properties:
+    year:
+      default:
+        null
+      description: ''
+      originalType: string
+      type: string
+  required: []
   type: object

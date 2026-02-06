@@ -1,11 +1,44 @@
-summary: ''
+summary: 'java-flow'
 description: ''
 value:
-  modules: []
+  modules:
+    - id: month
+      value:
+        hash:
+        path: u/admin/java-nyc_taxi/get-months
+        type: script
+        is_trigger: false
+        input_transforms:
+          year:
+            expr: flow_input.year
+      summary: Get Month
 schema:
   $schema: 'https://json-schema.org/draft/2020-12/schema'
   type: object
-  order: []
-  properties: {}
-  required: []
+  order:
+    - taxi
+    - year
+  properties:
+    taxi:
+      type: string
+      description: ''
+      default: yellow
+      enum:
+        - yellow
+        - green
+      nullable: false
+      enumLabels: {}
+    year:
+      type: string
+      description: ''
+      default: '2019'
+      enum:
+        - '2019'
+        - '2020'
+        - '2021'
+      nullable: false
+      enumLabels: {}
+  required:
+    - taxi
+    - year
 ws_error_handler_muted: false
