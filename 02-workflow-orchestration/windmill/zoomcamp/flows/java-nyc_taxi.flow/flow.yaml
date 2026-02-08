@@ -3,11 +3,19 @@ description: ""
 
 value:
   modules:
-    - id: month 
+    - id: trigger
+      summary: Every 30 seconds
+      value:
+        type: trigger
+        trigger:
+          type: cron
+          cron: "*/30 * * * * *"
+
+    - id: month
       summary: Get Month
       value:
         type: script
-        path: u/admin/java-nyc_taxi/get-months/Main
+        path: u/admin/java-nyc_taxi/get-months
         is_trigger: false
         input_transforms:
           year:
@@ -18,21 +26,10 @@ schema:
   $schema: https://json-schema.org/draft/2020-12/schema
   type: object
   properties:
-    taxi:
-      type: string
-      default: yellow
-      enum:
-        - yellow
-        - green
     year:
       type: string
       default: "2019"
-      enum:
-        - "2019"
-        - "2020"
-        - "2021"
-  required:
-    - taxi
-    - year
+      enum: ["2019", "2020", "2021"]
+  required: [year]
 
 ws_error_handler_muted: false
