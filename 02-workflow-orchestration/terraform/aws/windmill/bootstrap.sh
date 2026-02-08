@@ -24,7 +24,7 @@ chown -R ubuntu:ubuntu data-engineering-zoomcamp-2026
 sudo -u ubuntu ansible-playbook \
   -c local \
   -i localhost, \
-  /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/ansible/aws/windmill/site.yml
+  /home/ubuntu/data-engineering-zoomcamp-2026/02-workflow-orchestration/ansible/aws/windmill/site.yml -vv
 
 # Firewall LAST
 ufw allow 22
