@@ -68,12 +68,12 @@ wmill script push u/admin/java-nyc_taxi/get-months/Main.java \
   --token "$WMILL_TOKEN" \
   --workspace zoomcamp
 
-echo "Syncing flows..."
-cd /app/zoomcamp
-wmill flow push flows/java-nyc_taxi.flow f/admin/java-nyc_taxi \
-  --base-url "$WMILL_HOST" \
-  --token "$WMILL_TOKEN" \
-  --workspace zoomcamp
+# echo "Syncing flows..."
+# cd /app/zoomcamp
+# wmill flow push flows/java-nyc_taxi.flow f/admin/java-nyc_taxi \
+#   --base-url "$WMILL_HOST" \
+#   --token "$WMILL_TOKEN" \
+#   --workspace zoomcamp
 
 
 echo "Bootstrap complete"
