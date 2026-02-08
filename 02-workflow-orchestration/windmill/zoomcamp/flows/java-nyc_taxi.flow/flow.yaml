@@ -2,15 +2,11 @@ summary: java-flow
 description: ""
 
 value:
-  modules:
-    - id: trigger
-      summary: Every 30 seconds
-      value:
-        type: trigger
-        trigger:
-          type: cron
-          cron: "*/30 * * * * *"
+  triggers:
+    - type: cron
+      cron: "*/30 * * * * *"
 
+  modules:
     - id: month
       summary: Get Month
       value:
@@ -30,6 +26,7 @@ schema:
       type: string
       default: "2019"
       enum: ["2019", "2020", "2021"]
-  required: [year]
+  required:
+    - year
 
 ws_error_handler_muted: false
