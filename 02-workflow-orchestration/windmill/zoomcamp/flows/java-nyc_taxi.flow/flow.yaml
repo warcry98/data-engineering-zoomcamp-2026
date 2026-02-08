@@ -7,7 +7,7 @@ value:
       summary: Get Month
       value:
         type: script
-        path: u/admin/java-nyc_taxi/get-months
+        path: u/admin/java-nyc_taxi/get-months/Main
         is_trigger: false
         input_transforms:
           year:
